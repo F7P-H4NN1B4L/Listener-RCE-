@@ -34,7 +34,14 @@ print()
 
 
 
+import requests
+import socket
 
+public_ip = requests.get("https://api.ipify.org").text
+print(f"[+] Public IP: {public_ip}")
+
+local_ip = socket.gethostbyname(socket.gethostname())
+print(f"[+] Local IP: {local_ip}")
 
 
 
