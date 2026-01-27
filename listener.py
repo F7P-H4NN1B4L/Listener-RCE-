@@ -55,6 +55,10 @@ def get_arguments():
 
 options = get_arguments()
 
+if not options.local_ip or not options.port:
+    print("[-] Please provide -l <IP> and -p <PORT>")
+    exit()
+
 
 class Listener:
     def __init__(self, local_ip, port):
