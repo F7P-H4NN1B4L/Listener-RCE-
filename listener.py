@@ -10,6 +10,34 @@ import socket
 import json
 
 
+
+print(r"""FFFFFFFFFFFFFFFFFFFFFFTTTTTTTTTTTTTTTTTTTTTTTPPPPPPPPPPPPPPPPP   
+F::::::::::::::::::::FT:::::::::::::::::::::TP::::::::::::::::P  
+F::::::::::::::::::::FT:::::::::::::::::::::TP::::::PPPPPP:::::P 
+FF::::::FFFFFFFFF::::FT:::::TT:::::::TT:::::TPP:::::P     P:::::P
+  F:::::F       FFFFFFTTTTTT  T:::::T  TTTTTT  P::::P     P:::::P
+  F:::::F                     T:::::T          P::::P     P:::::P
+  F::::::FFFFFFFFFF           T:::::T          P::::PPPPPP:::::P 
+  F:::::::::::::::F           T:::::T          P:::::::::::::PP  
+  F:::::::::::::::F           T:::::T          P::::PPPPPPPPP    
+  F::::::FFFFFFFFFF           T:::::T          P::::P            
+  F:::::F                     T:::::T          P::::P            
+  F:::::F                     T:::::T          P::::P            
+FF:::::::FF                 TT:::::::TT      PP::::::PP          
+F::::::::FF                 T:::::::::T      P::::::::P          
+F::::::::FF                 T:::::::::T      P::::::::P          
+FFFFFFFFFFF                 TTTTTTTTTTT      PPPPPPPPPP""") 
+print()
+print()
+print()
+
+public_ip = requests.get("https://api.ipify.org").text
+print(f"[+] Public IP: {public_ip}")
+
+local_ip = socket.gethostbyname(socket.gethostname())
+print(f"[+] Local IP: {local_ip}")
+
+
 def get_arguments():
     """Get user supplied arguments from terminal."""
     parser = optparse.OptionParser()
