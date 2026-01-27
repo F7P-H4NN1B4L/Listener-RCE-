@@ -26,7 +26,7 @@ FF:::::::FF                 TT:::::::TT      PP::::::PP
 F::::::::FF                 T:::::::::T      P::::::::P          
 F::::::::FF                 T:::::::::T      P::::::::P          
 FFFFFFFFFFF                 TTTTTTTTTTT      PPPPPPPPPP""") 
-print(r'automated nmap scan by F7P-SHADOW)
+print()
 print()
 print()
 
