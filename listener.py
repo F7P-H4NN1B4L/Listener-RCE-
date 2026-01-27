@@ -3,7 +3,7 @@
 Simple listener script
 Python 3.8+
 """
-
+import requests
 import optparse
 import base64
 import socket
