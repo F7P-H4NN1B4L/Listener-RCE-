@@ -11,7 +11,7 @@ import json
 
 
 
-print(r"""FFFFFFFFFFFFFFFFFFFFFFTTTTTTTTTTTTTTTTTTTTTTTPPPPPPPPPPPPPPPPP   
+print( "\033[92m" +  r"""FFFFFFFFFFFFFFFFFFFFFFTTTTTTTTTTTTTTTTTTTTTTTPPPPPPPPPPPPPPPPP   
 F::::::::::::::::::::FT:::::::::::::::::::::TP::::::::::::::::P  
 F::::::::::::::::::::FT:::::::::::::::::::::TP::::::PPPPPP:::::P 
 FF::::::FFFFFFFFF::::FT:::::TT:::::::TT:::::TPP:::::P     P:::::P
@@ -26,7 +26,7 @@ FF::::::FFFFFFFFF::::FT:::::TT:::::::TT:::::TPP:::::P     P:::::P
 FF:::::::FF                 TT:::::::TT      PP::::::PP          
 F::::::::FF                 T:::::::::T      P::::::::P          
 F::::::::FF                 T:::::::::T      P::::::::P          
-FFFFFFFFFFF                 TTTTTTTTTTT      PPPPPPPPPP""") 
+FFFFFFFFFFF                 TTTTTTTTTTT      PPPPPPPPPP""" + "\033[0m" ) 
 print()
 print()
 print()
