@@ -38,15 +38,39 @@ local_ip = socket.gethostbyname(socket.gethostname())
 print(f"[+] Local IP: {local_ip}")
 
 
-def get_arguments():
-    """Get user supplied arguments from terminal."""
-    parser = optparse.OptionParser()
+def is_valid_ip(ip):
+    try:
+        socket.inet_aton(ip)
+        return True
+    except socket.error:
+        return False
 
+
+def is_valid_port(port):
+    return port.isdigit() and 1 <= int(port) <= 65535
+
+
+
+def get_arguments():
+    parser = optparse.OptionParser()
     parser.add_option('-l', '--local', dest='local_ip', help='Listener IP')
     parser.add_option('-p', '--port', dest='port', type=int, help='Listener port')
 
-    (options, arguments) = parser.parse_args()
+    (options, _) = parser.parse_args()
+
+    # Ask for IP if missing or invalid
+    while not options.local_ip or not is_valid_ip(options.local_ip):
+        options.local_ip = input("[?] Enter a valid listener IP: ").strip()
+
+    # Ask for port if missing or invalid
+    while not options.port or not (1 <= options.port <= 65535):
+        try:
+            options.port = int(input("[?] Enter a valid listener port (1-65535): ").strip())
+        except ValueError:
+            options.port = None
+
     return options
+
 
 
 options = get_arguments()
